@@ -14,9 +14,10 @@ import {MessageSnackbarComponent} from "../message-snackbar/message-snackbar.com
 export class SingleViewBookComponent implements OnInit, OnDestroy {
 
   book!: Book;
-  bookSubscription!: Subscription;
 
-  constructor(private bookService: BookService, private route: ActivatedRoute, private _snackBar: MatSnackBar) {
+  constructor(private bookService: BookService,
+              private route: ActivatedRoute,
+              private _snackBar: MatSnackBar) {
   }
 
   openSnackBar(message: string) {
@@ -27,22 +28,22 @@ export class SingleViewBookComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.bookSubscription = this.bookService.bookSubject.subscribe({
-      next: (data: any) => {
-        this.book = data;
+    const id = this.route.snapshot.params['id'];
+    this.bookService.getOne(id).subscribe({
+      next: response => {
+        console.log("getOne", response)
+        this.book = (<Book>response.data);
       },
-      error: (error: any) => {
+      error: (error) => {
+        console.log(error);
         this.openSnackBar('Error occurred');
       },
       complete: () => {
       }
     });
-
-    const id = this.route.snapshot.params['id'];
-    this.bookService.getOne(id);
   }
 
   ngOnDestroy(): void {
-    this.bookSubscription.unsubscribe();
+    this._snackBar.ngOnDestroy();
   }
 }

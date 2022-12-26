@@ -43,3 +43,4 @@ Thumbs.db
 /.vscode/
 /node/
 /frontend.iml
+/target/

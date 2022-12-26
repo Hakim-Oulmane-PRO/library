@@ -46,24 +46,13 @@ export class BookService {
     });
   }
 
-  getOne(id: number) {
+  getOne(id: number): Observable<JsonResponse> {
     let URL = `${this.configService.getLink()}/book/get/${id}`;
     let requestOptions = {
       headers: this.configService.getHeader()
     };
 
-    this.http.get<JsonResponse>(URL, requestOptions).subscribe({
-      next: response => {
-        console.log(URL, response)
-        this.bookSubject.next(response.data);
-      },
-      error: (error) => {
-        console.log(error);
-        this.bookSubject.error(error);
-      },
-      complete: () => {
-      }
-    });
+    return this.http.get<JsonResponse>(URL, requestOptions);
   }
 
   add(book: BookDTO) {

@@ -46,9 +46,7 @@ public class SpringSecurityConfig {
                 "/swagger-ui.html",
                 "/swagger-resources/**",
                 "/actuator/**",
-                "/h2-console",
-                "/h2-console/**",
-//                "/login",
+                "/h2-console"
         };
 
         http

@@ -21,7 +21,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
   book!: BookDTO;
 
   selectedBook!: Book;
-  bookSubscription!: Subscription;
 
   familyBooks!: FamilyBook[];
   familyBooksSubscription!: Subscription;
@@ -54,32 +53,32 @@ export class EditBookComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.bookSubscription = this.bookService.bookSubject.subscribe({
-      next: (data: any) => {
-        this.selectedBook = data;
-
-        this.bookForm.get('id')?.setValue(data.id);
-
-        this.bookForm.get('name')?.setValue(data.name);
-        this.bookForm.get('name')?.enable();
-
-        this.bookForm.get('author')?.setValue(data.author);
-        this.bookForm.get('author')?.enable();
-
-        this.bookForm.get('familyBook')?.setValue(data.familyBook?.id);
-        this.bookForm.get('familyBook')?.enable();
-      },
-      error: (error: any) => {
-        this.openSnackBar('Error occurred');
-      },
-      complete:() => {
-      }
-    });
-
     this.familyBookService.getAll();
 
     const id = this.route.snapshot.params['id'];
-    this.bookService.getOne(id);
+    this.bookService.getOne(id).subscribe({
+      next: response => {
+        console.log("getOne", response)
+        this.selectedBook = (<Book>response.data);
+
+        this.bookForm.get('id')?.setValue(this.selectedBook.id);
+
+        this.bookForm.get('name')?.setValue(this.selectedBook.name);
+        this.bookForm.get('name')?.enable();
+
+        this.bookForm.get('author')?.setValue(this.selectedBook.author);
+        this.bookForm.get('author')?.enable();
+
+        this.bookForm.get('familyBook')?.setValue(this.selectedBook.familyBook?.id);
+        this.bookForm.get('familyBook')?.enable();
+      },
+      error: (error) => {
+        console.log(error);
+        this.openSnackBar('Error occurred');
+      },
+      complete: () => {
+      }
+    });
   }
 
   onSubmitForm() {
