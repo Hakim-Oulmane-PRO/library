@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>backend</artifactId>
-    <name>library</name>
+    <name>backend</name>
 
     <properties>
         <springdoc.version>1.6.6</springdoc.version>

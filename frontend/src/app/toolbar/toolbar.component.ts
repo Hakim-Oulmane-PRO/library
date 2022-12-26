@@ -50,7 +50,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.authService.signOut().then(
       (resolve) => {
         this.openSnackBar(resolve);
-        this.router.navigate(["/login"]);
+        this.router.navigate(["/auth"]);
       },
       (reason) => {
         this.openSnackBar(reason);

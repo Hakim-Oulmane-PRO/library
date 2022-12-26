@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'detail/:id', canActivate: [AuthGuard], component: SingleViewBookComponent},
   {path: 'update/:id', canActivate: [AuthGuard], component: EditBookComponent},
   {path: 'add', canActivate: [AuthGuard], component: AddBookComponent},
-  {path: 'login', component: AuthComponent},
+  {path: 'auth', component: AuthComponent},
   {path: 'not-found', component: FourOhFourComponent},
   {path: '**', redirectTo: 'not-found'}
 ];

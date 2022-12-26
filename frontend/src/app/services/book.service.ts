@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Book} from "../models/Book.model";
-import {FamilyBook} from "../models/FamilyBook.model";
 import {Observable, Subject} from "rxjs";
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {JsonResponse} from "../models/JsonResponse.model";
 import {ConfigService} from "./config.service";
 import {BookDTO} from "../models/BookDTO.model";

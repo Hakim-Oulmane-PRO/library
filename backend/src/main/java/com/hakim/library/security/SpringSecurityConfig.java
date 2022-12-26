@@ -2,6 +2,8 @@ package com.hakim.library.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
@@ -46,7 +49,8 @@ public class SpringSecurityConfig {
                 "/swagger-ui.html",
                 "/swagger-resources/**",
                 "/actuator/**",
-                "/h2-console"
+                "/h2-console",
+                "/**",
         };
 
         http
@@ -55,11 +59,17 @@ public class SpringSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/book/**").hasRole("USER")
                 .antMatchers("/family-book/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(WHITE_LIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/login")
+
+                // 401-UNAUTHORIZED when anonymous user tries to access protected URLs
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+
+                .and().formLogin()
+//                .loginProcessingUrl("/login")
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
                 .and()
