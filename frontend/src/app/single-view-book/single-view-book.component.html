@@ -1,0 +1,16 @@
+<mat-card *ngIf="book">
+  <mat-card-header>
+    <mat-card-title>
+      {{book.name}}
+    </mat-card-title>
+    <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div><strong>ID</strong>: {{book.id}}</div>
+    <div><strong>Family</strong>: {{book.familyBook?.name}}</div>
+    <div><strong>Added</strong>: {{book.created | date: 'dd/MM/yyyy'}}</div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button routerLink="/">Close</button>
+  </mat-card-actions>
+</mat-card>

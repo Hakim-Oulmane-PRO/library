@@ -1,0 +1,21 @@
+div, mat-card {
+  margin: 2rem 2rem 2rem;
+}
+
+mat-card {
+  padding: 1rem;
+  font-size: large;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+strong {
+  flex-grow: 1;
+}
+
+#add {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem
+}

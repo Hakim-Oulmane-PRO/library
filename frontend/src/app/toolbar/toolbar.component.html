@@ -1,0 +1,6 @@
+<mat-toolbar color="primary">
+  <span>{{title}}</span>
+  <button mat-icon-button *ngIf="isAuth" (click)="openDialog()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

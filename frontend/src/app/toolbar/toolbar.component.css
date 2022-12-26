@@ -1,0 +1,7 @@
+mat-toolbar {
+  display: flex;
+}
+
+span {
+  flex-grow: 1;
+}
